@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
+import Colores from "./Colores.jsx";
 
-ReactDOM.createRoot(document.getElementById("root")).render(<h1>Hola</h1>);
+ReactDOM.createRoot(document.getElementById("root")).render(<Colores />);
