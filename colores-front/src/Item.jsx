@@ -1,3 +1,4 @@
-export default function Item() {
-  return <li>123,123,123</li>;
+// eslint-disable-next-line react/prop-types
+export default function Item({ r, g, b }) {
+  return <li style={{ backgroundColor: `rgb(${[r, g, b].join(",")})` }}>{[r, g, b].join(",")}</li>;
 }
