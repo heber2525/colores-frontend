@@ -8,7 +8,17 @@ export default function Formulario() {
     <form
       onSubmit={(evento) => {
         evento.preventDefault();
-        console.log(textoInput);
+        setError(false);
+        let valido = /^(\d{1,3},){2}\d{1,3}$/.test(textoInput);
+
+        if (valido) {
+          textoInput.split(",").forEach((n) => (valido = valido && +n >= 0 && +n <= 255));
+
+          if (valido) {
+            return console.log("ok");
+          }
+          setError(true);
+        }
       }}
     >
       <input
@@ -19,7 +29,7 @@ export default function Formulario() {
           setTextoInput(evento.target.value);
         }}
       />
-      <p className={`error ${error ? "visible" : ""}`}>x error</p>
+      <p className={`error ${error ? "visible" : ""}`}>Debe escribir tres valores entre 0 y 255 separados con comas</p>
       <input type="submit" value="crear color" />
     </form>
   );
