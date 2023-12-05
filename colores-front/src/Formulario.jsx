@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export default function Formulario() {
+export default function Formulario({ agregarColor }) {
   let [error, setError] = useState(false);
 
   let [textoInput, setTextoInput] = useState("");
@@ -12,13 +12,30 @@ export default function Formulario() {
         let valido = /^(\d{1,3},){2}\d{1,3}$/.test(textoInput);
 
         if (valido) {
-          textoInput.split(",").forEach((n) => (valido = valido && +n >= 0 && +n <= 255));
+          let [r, g, b] = textoInput.split(",").map((n) => +n);
+          [r, g, b].forEach((n) => (valido = valido && +n >= 0 && +n <= 255));
 
           if (valido) {
-            return console.log("ok");
+            return fetch("http://localhost:3000/nuevo", {
+              method: "POST",
+              body: JSON.stringify({ r, g, b }),
+              headers: {
+                "Content-type": "application/json",
+              },
+            })
+              .then((respuesta) => respuesta.json())
+              .then((respuesta) => {
+                let { resultado, _id } = respuesta;
+
+                if (_id) {
+                  setTextoInput("");
+                  return agregarColor({ _id, r, g, b });
+                }
+                console.log("mostrar error a usuario");
+              });
           }
-          setError(true);
         }
+        setError(true);
       }}
     >
       <input

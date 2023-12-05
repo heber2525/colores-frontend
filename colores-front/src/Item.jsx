@@ -1,4 +1,7 @@
-// eslint-disable-next-line react/prop-types
-export default function Item({ r, g, b }) {
-  return <li style={{ backgroundColor: `rgb(${[r, g, b].join(",")})` }}>{[r, g, b].join(",")}</li>;
+export default function Item({ id, r, g, b, borrarColor }) {
+  return (
+    <li style={{ backgroundColor: `rgb(${[r, g, b].join(",")})` }} onClick={borrarColor(id)}>
+      {[r, g, b].join(",")}
+    </li>
+  );
 }
